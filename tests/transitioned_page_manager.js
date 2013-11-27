@@ -1,3 +1,5 @@
+Template.one.preserve(['.one']);
+
 Tinytest.add('TransitionedPageManager - basic rendering', function (test) {
   var pageManager = new TransitionedPageManager;
   
@@ -112,3 +114,73 @@ Tinytest.add('TransitionedPageManager - transitionType function', function (test
   var classes = div.div.children[0].className;
   test.matches(classes, /special/, 'No special class set on div');
 });
+
+// var SubscriptionMock = function() {
+//   this.open = false;
+//   this.subCount = 0;
+//   this.reopenCount = 0;
+// }
+// SubscriptionMock.prototype.subscribe = function() {
+//   var self = this;
+//   
+//   self.subCount += 1;
+//   if (! self.open) {
+//     self.reopenCount += 1;
+//     self.open = true;
+//   }
+//   
+//   if (Deps.active) {
+//     Deps.onInvalidate(function() {
+//       self.subCount -= 1;
+//       console.log("SUB COUNT IS", self.subCount)
+//       if (self.subCount === 0)
+//         Deps.afterFlush(function () {
+//           console.log("SUB COUNT IS STILL", self.subCount)
+//           if (self.subCount === 0)
+//             self.open = false;
+//         });
+//       
+//     });
+//   }
+//   
+//   return {ready: function() { return true; }};
+// }
+// 
+// Tinytest.add('Transitioned Router - subscription preservation', function (test) {
+//   var sub = new SubscriptionMock;
+//   
+//   var router = new ClientRouter({
+//     autoStart: false,
+//     autoRender: false
+//   });
+//   
+//   router.configure({
+//     loadingTemplate: 'loading',
+//     waitOn: function() { return Sub.subscribe(); }
+//   })
+//   router.map(function() {
+//     this.route('one');
+//     this.route('two');
+//   });
+//   
+//   var frag = Spark.render(function() {
+//     return router.render();
+//   });
+//   var div = new OnscreenDiv(frag);
+//   
+//   var pageManager = new TransitionedPageManager;
+//   router._page = pageManager;
+//   
+//   console.log('HERE');
+//   router.go('one')
+//   Deps.flush();
+//   test.equal(sub.reopenCount, 1, 'Sub not opened once');
+//   
+//   router.go('two')
+//   Deps.flush();
+//   test.equal(sub.reopenCount, 1, 'Sub opened more than once');
+//   
+//   router.go('two')
+//   Deps.flush();
+//   test.equal(sub.reopenCount, 1, 'Sub opened more than once');
+// });
