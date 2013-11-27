@@ -5,9 +5,6 @@
   "author": "Tom Coleman (https://github.com/tmeasday)",
   "version": "0.1.0",
   "packages": {
-    "iron-router": {
-      "git": "https://github.com/EventedMind/iron-router.git",
-      "branch": "iron-transitioner"
-    }
+    "iron-router": {}
   }
 }
