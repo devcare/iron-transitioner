@@ -3,6 +3,7 @@
   "description": "Easy page-page transitions integrated with IronRouter",
   "homepage": "https://github.com/percolatestudio/iron-transitioner",
   "author": "Tom Coleman (http://percolatestudio.com)",
+  "git": "https://github.com/percolatestudio/iron-transitioner.git",
   "version": "0.1.0",
   "packages": {
     "iron-router": {}
