@@ -6,7 +6,7 @@ Just `mrt add iron-transitioner`. That's it.
 
 If you want to use a layout, you can transition a yielded section simply by calling `{{transitionedYield}}` where you would normally call `{{yield}}`. You can still continue to use `{{yield}}` in your layout.
 
-**NOTE** that due to limitations in IT, you *cannot* use `data` in you layout. Hopefully this limitation will be gone with the release of Meteor UI.
+**NOTE** that due to limitations in IT, you *cannot* use `data` in your layout. Hopefully this limitation will be gone with the release of Meteor UI.
 
 ### How it works
 
@@ -22,6 +22,8 @@ Iron Transitioner places down the following HTML structure:
 Initially, IT will render the page into `.left-pane`, and will add `.current-page` to it.
 
 When the page changes, IT will render the new page into `.right-pane`, mark it as `.next-page` to it, and then set the class `.transitioning` to the the `.transitioner-panes`, as well as some classes indication which templates are being transitioned from and to.
+
+When the transition is over, it will empty the `.left-pane`, and move the `.current-page` class to the `.right-pane` div. On the next transition, it will do the reverse.
 
 You can those changes to easily implement CSS transitions. The package comes with a built in `.default` transition that slides the next page in from the right.
 
@@ -46,6 +48,7 @@ Router.transitionType(function(fromTemplate, toTemplate) {});
 to set the type of the transition based on the templates being used.
 
 This type will be added to the `.transitioner-panes`, along with `.from-X` and `.to-Y` (where `X` and `Y` are the names of the templates being transitioned).
+
 
 **Some examples**:
 
@@ -84,6 +87,10 @@ Of course, you might be better off just doing (and not polluting your JS with pr
   // special transition CSS
 }
 ```
+
+### Cancelling a transition
+
+If you return `false` from your transition type function, the transition will cancel, and IT will redraw the next template in the same pane. This allows things like `preserve` to work for instance.
 
 ### Contributing
 
