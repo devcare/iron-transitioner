@@ -6,8 +6,7 @@ Just `mrt add iron-transitioner`. That's it.
 
 If you want to use a layout, you can transition a yielded section simply by calling `{{transitionedYield}}` where you would normally call `{{yield}}`. You can still continue to use `{{yield}}` in your layout.
 
-**NOTE** that 
-
+**NOTE** that due to limitations in IT, you *cannot* use `data` in you layout. Hopefully this limitation will be gone with the release of Meteor UI.
 
 ### How it works
 
