@@ -3,19 +3,22 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use(['iron-router', 'templating'], 'client');
+  api.use(['iron-router', 'templating', 'underscore', 'less'], 'client');
   api.add_files([
-    'transitionerPanes.html', 
-    'transitionerPanes.js'
-  ], 'client');
+    'lib/transitioned_default_layout.html',
+    'lib/transitioned_default_layout.less',
+    'lib/transitioned_yield.html', 
+    'lib/transitioned_yield.js',
+    'lib/transitioned_page_manager.js'
+  ], 'client')
   
-  if (typeof(api.export) !== 'undefined') {
-    api.export('Transitioner', 'client');
-  }
+  api.export('TransitionedYield', 'client', {testOnly: true});
+  api.export('TransitionedPageManager', 'client', {testOnly: true});
 });
 
 Package.on_test(function(api) {
   api.use([
+    'iron-router',
     'iron-transitioner',
     'tinytest',
     'test-helpers',
@@ -23,7 +26,9 @@ Package.on_test(function(api) {
   ]);
   
   api.add_files([
-    'transitionerPanes_test.html',
-    'transitionerPanes_test.js'
+    'tests/mocks.js',
+    'tests/templates.html',
+    'tests/transitioned_yield.js',
+    'tests/transitioned_page_manager.js'
   ], 'client')
 });

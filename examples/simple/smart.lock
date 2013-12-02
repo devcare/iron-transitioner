@@ -1,0 +1,20 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "iron-transitioner": {
+        "path": "../.."
+      }
+    },
+    "packages": {
+      "iron-transitioner": {
+        "path": "../.."
+      },
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "branch": "iron-transitioner",
+        "commit": "15d77fe33eaf71759ffdf35628afc33ab571bfb9"
+      }
+    }
+  }
+}
