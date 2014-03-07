@@ -3,7 +3,9 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use(['iron-router', 'templating', 'underscore', 'less'], 'client');
+  // right now this is just so we don't use it in tests.
+  api.use('iron-router', 'client', {weak: true});
+  api.use(['reactive-dict', 'blaze-layout', 'ui', 'templating', 'underscore', 'less'], 'client');
   api.add_files([
     'lib/transitioned_default_layout.html',
     'lib/transitioned_default_layout.less',
@@ -18,12 +20,14 @@ Package.on_use(function (api) {
 
 Package.on_test(function(api) {
   api.use([
-    'iron-router',
     'iron-transitioner',
-    'tinytest',
+    'blaze-layout',
     'test-helpers',
+    'tinytest',
+    'ui',
     'templating',
-  ]);
+    'deps'
+  ], 'client');
   
   api.add_files([
     'tests/mocks.js',

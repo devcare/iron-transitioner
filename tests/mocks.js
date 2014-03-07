@@ -1,4 +1,4 @@
-Router.configure({
-  autoRender: false,
-  autoStart: false
-});
+// Router.configure({
+//   autoRender: false,
+//   autoStart: false
+// });
