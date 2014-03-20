@@ -22,6 +22,15 @@ var withRenderedComponent = function (cmp, parentInst, cb) {
   }
 };
 
+var withTransitionedYieldInLayout = function(cb) {
+  // instantiate a layout but don't actually render it to the screen.
+  var layout = Layout.instantiate();
+
+  var cmp = TransitionedYield.extend({region: 'main'});
+  withRenderedComponent(cmp, layout, function (inst, screen) {
+    cb(screen, layout, inst, cmp);
+  });
+}
 
 // *****************************************************
 
@@ -58,51 +67,38 @@ var withRenderedComponent = function (cmp, parentInst, cb) {
 //   }
 // }
 
-Tinytest.add('TransitionedYield - basic rendering', function (test) {
-  // instantiate a layout but don't actually render it to the screen.
-  var layout = Layout.instantiate();
-  
-  var cmp = TransitionedYield.extend({region: 'main'});
-  withRenderedComponent(cmp, layout, function (inst, screen) {
-    console.log(screen.html());
-    
+Tinytest.add('TransitionedYield - standard Layout - basic rendering', function (test) {
+  withTransitionedYieldInLayout(function(screen, layout) {
     layout.setRegion('one');
     Deps.flush();
-    console.log(screen.html());
     test.equal(screen.text().trim(), 'One', 'one not rendered');
       
     layout.setRegion('two');
     Deps.flush();
-    console.log(screen.html());
     test.equal(screen.text().trim(), 'Two', 'two not rendered');
   });
 });
-// 
-// Tinytest.add('TransitionedYield - basic transitioning', function (test) {
-//   var pageManager = new PageManagerMock()
-//   var transitionedYield = new TransitionedYield(pageManager, '__main__');
-//   
-//   var frag = Spark.render(function() {
-//     return transitionedYield.render();
-//   });
-//   var div = new OnscreenDiv(frag);
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'One', 'one not rendered');
-//   
-//   transitionedYield.transition('two', 'normal');
-//   pageManager.setTemplate('two');
-//   Deps.flush();
-//   test.matches(div.text().trim(), /One\s+Two/, 'two not rendered alongside');
-//   
-//   transitionedYield.stopTransition();
-//   test.equal(div.text().trim(), 'Two', 'one not cleared');
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'One', 'one not rendered');
-// });
+
+Tinytest.add('TransitionedYield - standard Layout - basic transitioning', function (test) {
+  withTransitionedYieldInLayout(function(screen, layout, transitionedYield) {
+    layout.setRegion('one');
+    Deps.flush();
+    test.equal(screen.text().trim(), 'One', 'one not rendered');
+
+    transitionedYield.transition('two', 'normal');
+    layout.setRegion('two');
+    Deps.flush();
+    test.matches(screen.text().trim(), /One\s+Two/, 'two not rendered alongside');
+
+    transitionedYield.stopTransition();
+    test.equal(screen.text().trim(), 'Two', 'one not cleared');
+
+    layout.setRegion('one');
+    Deps.flush();
+    test.equal(screen.text().trim(), 'One', 'one not rendered');
+  });
+});
+
 // 
 // Tinytest.add('TransitionedYield - reactivity', function (test) {
 //   var pageManager = new PageManagerMock()
