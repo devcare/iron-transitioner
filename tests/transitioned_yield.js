@@ -1,27 +1,3 @@
-// XXX: Stolen from blaze-layout, converted
-
-var renderComponent = function (cmp, parentInst, where) {
-  var inst = UI.render(cmp, parentInst);
-  UI.DomRange.insert(inst.dom, where);
-  return inst;
-};
-
-var withRenderedComponent = function (cmp, parentInst, cb) {
-  if (arguments.length < 3) {
-    cb = parentCmp;
-    parentCmp = null;
-  }
-
-  var screen = new OnscreenDiv;
-  var inst = renderComponent(cmp, parentInst, screen.node());
-
-  try {
-    cb(inst, screen);
-  } finally {
-    screen.kill();
-  }
-};
-
 var withTransitionedYieldInLayout = function(cb) {
   // instantiate a layout but don't actually render it to the screen.
   var layout = Layout.instantiate();
@@ -31,6 +7,8 @@ var withTransitionedYieldInLayout = function(cb) {
     cb(screen, layout, inst, cmp);
   });
 }
+
+
 
 Tinytest.add('TransitionedYield - standard Layout - basic rendering', function (test) {
   withTransitionedYieldInLayout(function(screen, layout) {

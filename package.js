@@ -11,11 +11,11 @@ Package.on_use(function (api) {
     'lib/transitioned_default_layout.less',
     'lib/transitioned_yield.html', 
     'lib/transitioned_yield.js',
-    'lib/transitioned_page_manager.js'
+    'lib/transitioned_layout.js'
   ], 'client')
   
   api.export('TransitionedYield', 'client', {testOnly: true});
-  api.export('TransitionedPageManager', 'client', {testOnly: true});
+  api.export('TransitionedLayout', 'client', {testOnly: true});
 });
 
 Package.on_test(function(api) {
@@ -30,9 +30,9 @@ Package.on_test(function(api) {
   ], 'client');
   
   api.add_files([
-    'tests/mocks.js',
+    'tests/helpers.js',
     'tests/templates.html',
     'tests/transitioned_yield.js',
-    'tests/transitioned_page_manager.js'
+    'tests/transitioned_layout.js'
   ], 'client')
 });
