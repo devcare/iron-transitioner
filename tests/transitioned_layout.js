@@ -26,69 +26,54 @@ Tinytest.add('TransitionedLayout - basic transitioning', function (test) {
   });
 });
 
+Tinytest.add('TransitionedLayout - no changes when data changes', function (test) {
+  withTransitionedLayout(function(transitionedLayout, screen) {
+    transitionedLayout.setRegion('one');
+    Deps.flush();
+    test.equal(screen.text().trim(), 'One', 'one not rendered');
+    var oneDiv = screen.div.children[0].children[0].children[0];
+  
+    transitionedLayout.setData({foo: 'bar'});
+    Deps.flush();
+    test.equal(screen.text().trim(), 'One', 'one not re-rendered');
+    var newOneDiv = screen.div.children[0].children[0].children[0];
+  
+    test.equal(newOneDiv, oneDiv, 'new oneDiv rendered!');
+  });
+});
+
+Tinytest.add('TransitionedLayout - non transitioned yield', function (test) {
+  withTransitionedLayout(function(transitionedLayout, screen) {
+    transitionedLayout.template('standardLayout');
+    transitionedLayout.setRegion('one');
+  
+    transitionedLayout.setRegion('one');
+    Deps.flush();
+    test.equal(screen.text().trim(), 'One', 'one not rendered');
+  
+    transitionedLayout.setRegion('two');
+    Deps.flush();
+    test.equal(screen.text().trim(), 'Two', 'one not cleared');
+  });
+});
+
+// XXX: should this be a test on transitionedYield??
+Tinytest.add('TransitionedLayout - correct classes set', function (test) {
+  withTransitionedLayout(function(transitionedLayout, screen) {
+    transitionedLayout.setRegion('one');
+    Deps.flush();
+  
+    transitionedLayout.setRegion('two');
+    Deps.flush();
+  
+    var classes = screen.div.children[0].className;
+    test.matches(classes, /default/, 'No type class set on div');
+    test.matches(classes, /from-one/, 'No from class set on div');
+    test.matches(classes, /to-two/, 'No to class set on div');
+  });
+});
 
 
-// 
-// Tinytest.add('TransitionedPageManager - no changes when data changes', function (test) {
-//   var pageManager = new TransitionedPageManager;
-//   
-//   var frag = Spark.render(function() {
-//     return pageManager.renderLayout();
-//   });
-//   var div = new OnscreenDiv(frag);
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'One', 'one not rendered');
-//   var oneDiv = div.div.children[0].children[0].children[0];
-//   
-//   pageManager.setData({foo: 'bar'});
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'One', 'one not re-rendered');
-//   var newOneDiv = div.div.children[0].children[0].children[0];
-//   
-//   test.equal(newOneDiv, oneDiv, 'new oneDiv rendered!');
-// });
-// 
-// Tinytest.add('TransitionedPageManager - non transitioned yield', function (test) {
-//   var pageManager = new TransitionedPageManager;
-//   
-//   pageManager.setLayout('standardLayout');
-//   var frag = Spark.render(function() {
-//     return pageManager.renderLayout();
-//   });
-//   var div = new OnscreenDiv(frag);
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'One', 'one not rendered');
-//   
-//   pageManager.setTemplate('two');
-//   Deps.flush();
-//   test.equal(div.text().trim(), 'Two', 'one not cleared');
-// });
-// 
-// 
-// Tinytest.add('TransitionedPageManager - correct classes set', function (test) {
-//   var pageManager = new TransitionedPageManager;
-//   
-//   var frag = Spark.render(function() {
-//     return pageManager.renderLayout();
-//   });
-//   var div = new OnscreenDiv(frag);
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   
-//   pageManager.setTemplate('two');
-//   Deps.flush();
-//   
-//   var classes = div.div.children[0].className;
-//   test.matches(classes, /default/, 'No type class set on div');
-//   test.matches(classes, /from-one/, 'No from class set on div');
-//   test.matches(classes, /to-two/, 'No to class set on div');
-// });
-// 
 // Tinytest.add('TransitionedPageManager - transitionType function', function (test) {
 //   var pageManager = new TransitionedPageManager;
 //   pageManager.transitionType = function() {

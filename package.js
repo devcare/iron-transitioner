@@ -11,7 +11,8 @@ Package.on_use(function (api) {
     'lib/transitioned_default_layout.less',
     'lib/transitioned_yield.html', 
     'lib/transitioned_yield.js',
-    'lib/transitioned_layout.js'
+    'lib/transitioned_layout.js',
+    'lib/hookup.js'
   ], 'client')
   
   api.export('TransitionedYield', 'client', {testOnly: true});
