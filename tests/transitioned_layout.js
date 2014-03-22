@@ -74,26 +74,23 @@ Tinytest.add('TransitionedLayout - correct classes set', function (test) {
 });
 
 
-// Tinytest.add('TransitionedPageManager - transitionType function', function (test) {
-//   var pageManager = new TransitionedPageManager;
-//   pageManager.transitionType = function() {
-//     return 'special';
-//   }
-//   
-//   var frag = Spark.render(function() {
-//     return pageManager.renderLayout();
-//   });
-//   var div = new OnscreenDiv(frag);
-//   
-//   pageManager.setTemplate('one');
-//   Deps.flush();
-//   
-//   pageManager.setTemplate('two');
-//   Deps.flush();
-//   
-//   var classes = div.div.children[0].className;
-//   test.matches(classes, /special/, 'No special class set on div');
-// });
+Tinytest.add('TransitionedPageManager - transitionType function', function (test) {
+  withTransitionedLayout(function(transitionedLayout, screen) {
+    transitionedLayout.setTransitionType(function() {
+      return 'special';
+    });
+  
+    transitionedLayout.setRegion('one');
+    Deps.flush();
+  
+    transitionedLayout.setRegion('two');
+    Deps.flush();
+  
+    var classes = screen.div.children[0].className;
+    test.matches(classes, /special/, 'No special class set on div');
+  });
+});
+
 // 
 // // var SubscriptionMock = function() {
 // //   this.open = false;
