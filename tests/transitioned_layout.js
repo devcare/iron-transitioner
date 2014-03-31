@@ -6,7 +6,7 @@ Tinytest.add('TransitionedLayout - _defaultLayout', function (test) {
   withTransitionedLayout(function(transitionedLayout, screen) {
     transitionedLayout.setRegion('one');
     Deps.flush();
-    test.equal(screen.text().trim(), 'One', 'one not rendered');
+    test.equal($(screen).text().trim(), 'One', 'one not rendered');
   });
 });
 
@@ -14,15 +14,15 @@ Tinytest.add('TransitionedLayout - basic transitioning', function (test) {
   withTransitionedLayout(function(transitionedLayout, screen) {
     transitionedLayout.setRegion('one');
     Deps.flush();
-    test.equal(screen.text().trim(), 'One', 'one not rendered');
+    test.equal($(screen).text().trim(), 'One', 'one not rendered');
     
     transitionedLayout.setRegion('two');
     Deps.flush();
-    test.matches(screen.text().trim(), /One\s+Two/, 'two not rendered alongside');
+    test.matches($(screen).text().trim(), /One\s+Two/, 'two not rendered alongside');
   
     transitionedLayout.endTransitions();
     Deps.flush();
-    test.equal(screen.text().trim(), 'Two', 'one not cleared');
+    test.equal($(screen).text().trim(), 'Two', 'one not cleared');
   });
 });
 
@@ -30,13 +30,13 @@ Tinytest.add('TransitionedLayout - no changes when data changes', function (test
   withTransitionedLayout(function(transitionedLayout, screen) {
     transitionedLayout.setRegion('one');
     Deps.flush();
-    test.equal(screen.text().trim(), 'One', 'one not rendered');
-    var oneDiv = screen.div.children[0].children[0].children[0];
+    test.equal($(screen).text().trim(), 'One', 'one not rendered');
+    var oneDiv = screen.children[0].children[0].children[0];
   
     transitionedLayout.setData({foo: 'bar'});
     Deps.flush();
-    test.equal(screen.text().trim(), 'One', 'one not re-rendered');
-    var newOneDiv = screen.div.children[0].children[0].children[0];
+    test.equal($(screen).text().trim(), 'One', 'one not re-rendered');
+    var newOneDiv = screen.children[0].children[0].children[0];
   
     test.equal(newOneDiv, oneDiv, 'new oneDiv rendered!');
   });
@@ -49,11 +49,11 @@ Tinytest.add('TransitionedLayout - non transitioned yield', function (test) {
   
     transitionedLayout.setRegion('one');
     Deps.flush();
-    test.equal(screen.text().trim(), 'One', 'one not rendered');
+    test.equal($(screen).text().trim(), 'One', 'one not rendered');
   
     transitionedLayout.setRegion('two');
     Deps.flush();
-    test.equal(screen.text().trim(), 'Two', 'one not cleared');
+    test.equal($(screen).text().trim(), 'Two', 'one not cleared');
   });
 });
 
@@ -66,7 +66,7 @@ Tinytest.add('TransitionedLayout - correct classes set', function (test) {
     transitionedLayout.setRegion('two');
     Deps.flush();
   
-    var classes = screen.div.children[0].className;
+    var classes = screen.children[0].className;
     test.matches(classes, /default/, 'No type class set on div');
     test.matches(classes, /from-one/, 'No from class set on div');
     test.matches(classes, /to-two/, 'No to class set on div');
@@ -86,7 +86,7 @@ Tinytest.add('TransitionedPageManager - transitionType function', function (test
     transitionedLayout.setRegion('two');
     Deps.flush();
   
-    var classes = screen.div.children[0].className;
+    var classes = screen.children[0].className;
     test.matches(classes, /special/, 'No special class set on div');
   });
 });

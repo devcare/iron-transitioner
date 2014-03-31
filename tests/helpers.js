@@ -12,12 +12,13 @@ withRenderedComponent = function (cmp, parentInst, cb) {
     parentInst = null;
   }
 
-  var screen = new OnscreenDiv;
-  var inst = renderComponent(cmp, parentInst, screen.node());
+  var screen = document.createElement('div');
+  document.body.appendChild(screen);
+  var inst = renderComponent(cmp, parentInst, screen);
 
   try {
     cb(inst, screen);
   } finally {
-    screen.kill();
+    document.body.removeChild(screen);
   }
 };
