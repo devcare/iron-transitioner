@@ -3,11 +3,11 @@
 </head>
 
 <template name="one">
-  ONE
-  <a href="{{pathFor 'two'}}">TWO</a>
+  ONE {{this}}
+  <a href="/two">Foo</a>
 </template>
 
 <template name="two">
   <a href="{{pathFor 'one'}}">ONE</a>
-  TWO
+  TWO {{this}}
 </template>
