@@ -42,6 +42,34 @@ Tinytest.add('TransitionedYield - standard Layout - basic transitioning', functi
   });
 });
 
+Tinytest.add('TransitionedYield - standard Layout - queued transitioning', function (test) {
+  withTransitionedYieldInLayout(function(screen, layout, transitionedYield) {
+    layout.setRegion('one');
+    Deps.flush();
+    test.equal($(screen).text().trim(), 'One', 'one not rendered');
+
+    transitionedYield.transition('two', 'normal');
+    layout.setRegion('two');
+    Deps.flush();
+    test.matches($(screen).text().trim(), /One\s+Two/, 'two not rendered alongside');
+
+    transitionedYield.transition('one', 'normal')
+    layout.setRegion('one');
+    Deps.flush();
+    test.matches($(screen).text().trim(), /One\s+Two/, 'transition not queued');
+
+    transitionedYield.stopTransition();
+    // now we are transitioning back the other way, so One will be first in the dom
+    test.matches($(screen).text().trim(), /One\s+Two/, 'queued transition not run');
+
+    transitionedYield.stopTransition();
+    test.equal($(screen).text().trim(), 'One', 'Two not cleared');
+
+    layout.setRegion('two');
+    Deps.flush();
+    test.equal($(screen).text().trim(), 'Two', 'Two not rendered');
+  });
+});
 
 Tinytest.add('TransitionedYield - standard Layout - reactivity', function (test) {
   withTransitionedYieldInLayout(function(screen, layout, transitionedYield) {
