@@ -7,6 +7,7 @@ Package.on_use(function (api) {
   api.use('iron-router', 'client', {weak: true});
   api.use(['reactive-dict', 'blaze-layout', 'ui', 'templating', 'underscore', 'less'], 'client');
   api.add_files([
+    'lib/utils.js',
     'lib/transitioned_default_layout.html',
     'lib/transitioned_default_layout.less',
     'lib/transitioned_yield.html', 
