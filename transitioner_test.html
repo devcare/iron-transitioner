@@ -1,0 +1,15 @@
+<template name="TransitionedLayout">
+  <div> {{! this div is for ui hook attachment}}
+    {{#transitioner}}
+      {{> yield}}
+    {{/transitioner}}
+  </div>
+</template>
+
+<template name="One">
+  <div class="one">One</div>
+</template>
+
+<template name="Two">
+  <div class="two">Two</div>
+</template>
