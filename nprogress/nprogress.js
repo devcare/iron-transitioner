@@ -25,15 +25,6 @@ if (Meteor.isClient) {
   // XXX: not sure why this isn't working
   // Router.plugin('loading', {loadingTemplate: 'Loading'});
   
-  Router.onBeforeAction(function() {
-    console.log(this.ready())
-    if (! this.ready()) {
-      this.render('Loading');
-    } else {
-      this.next();
-    }
-  });
-  
   Template.Loading.rendered = function() {
     NProgress.start();
   }
