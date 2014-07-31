@@ -5,7 +5,7 @@ Package.describe({
 Package.on_use(function (api) {
   // right now this is just so we don't use it in tests.
   api.use('iron-router', 'client', {weak: true});
-  api.use(['reactive-dict', 'blaze-layout', 'ui', 'templating', 'underscore', 'less'], 'client');
+  api.use(['reactive-dict', 'ui', 'templating', 'underscore', 'less'], 'client');
   api.add_files([
     'lib/utils.js',
     'lib/transitioned_default_layout.html',
@@ -23,7 +23,6 @@ Package.on_use(function (api) {
 Package.on_test(function(api) {
   api.use([
     'iron-transitioner',
-    'blaze-layout',
     'test-helpers',
     'tinytest',
     'ui',
