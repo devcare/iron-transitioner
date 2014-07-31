@@ -4,8 +4,7 @@ Package.describe({
 
 Package.on_use(function (api) {
   // right now this is just so we don't use it in tests.
-  api.use('iron-router', 'client', {weak: true});
-  api.use('blaze-layout', 'client', {weak: true});
+  api.use('iron-router', 'client');
   api.use(['reactive-dict', 'ui', 'templating', 'underscore', 'less'], 'client');
   api.add_files([
     'lib/utils.js',
